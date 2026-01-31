@@ -4,10 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta name="description"
         content="SBS Energy - Bharat Petrol Pump in Dingore, Maharashtra. Quality fuel, car wash, air pump services on National Highway. Rated 4.2 stars.">
     <meta name="keywords"
         content="petrol pump, gas station, Bharat Petroleum, fuel, diesel, car wash, Maharashtra, Dingore">
+    <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self';">
     <title>SBS Energy - Bharat Petrol Pump | Quality Fuel & Services</title>
     <link rel="icon" type="image/png" href="bpcl_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +30,8 @@
         <div class="container nav-container">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="bpcl_logo.png" alt="BPCL Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                    <img src="images/sbs_logo.jpg" alt="SBS Energy Logo"
+                        style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
                 <div class="logo-text">
                     <span class="logo-main">SBS Energy</span>
@@ -34,6 +41,7 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#location" class="nav-link">Location</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -120,49 +128,42 @@
             <div class="hero-image">
                 <div class="image-card">
                     <div class="image-glow"></div>
-                    <div class="slideshow-container">
-                        <div class="slide active">
-                            <img src="slideshow_1.png" alt="SBS Energy Bharat Petrol Pump - Aerial View"
-                                class="pump-image">
-                        </div>
-                        <div class="slide">
-                            <img src="slideshow_2.png" alt="SBS Energy Bharat Petrol Pump - Night View"
-                                class="pump-image">
-                        </div>
-                        <div class="slide">
-                            <img src="slideshow_3.png" alt="SBS Energy Bharat Petrol Pump - Fuel Station"
-                                class="pump-image">
-                        </div>
-                        <div class="slide">
-                            <img src="slideshow_4.png" alt="SBS Energy Bharat Petrol Pump - Day View"
-                                class="pump-image">
-                        </div>
-                        <div class="slide">
-                            <img src="slideshow_5.png" alt="SBS Energy Bharat Petrol Pump - Evening View"
-                                class="pump-image">
-                        </div>
-
-                        <!-- Navigation Arrows -->
-                        <button class="slide-nav prev" aria-label="Previous slide">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </button>
-                        <button class="slide-nav next" aria-label="Next slide">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </button>
-
-                        <!-- Slide Indicators -->
-                        <div class="slide-indicators">
-                            <button class="indicator active" data-slide="0" aria-label="Go to slide 1"></button>
-                            <button class="indicator" data-slide="1" aria-label="Go to slide 2"></button>
-                            <button class="indicator" data-slide="2" aria-label="Go to slide 3"></button>
-                            <button class="indicator" data-slide="3" aria-label="Go to slide 4"></button>
-                            <button class="indicator" data-slide="4" aria-label="Go to slide 5"></button>
+                    <!-- Video Container -->
+                    <div class="video-container">
+                        <video class="hero-video" autoplay muted loop playsinline poster="slideshow_1.png">
+                            <source src="images/Site-Video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-controls">
+                            <button class="video-play-pause" aria-label="Play/Pause video">
+                                <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 3L19 12L5 21V3Z" fill="currentColor" />
+                                </svg>
+                                <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    style="display: none;">
+                                    <path d="M6 4H10V20H6V4Z" fill="currentColor" />
+                                    <path d="M14 4H18V20H14V4Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <button class="video-sound-toggle" aria-label="Toggle sound">
+                                <svg class="sound-off-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <svg class="sound-on-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    style="display: none;">
+                                    <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M19.07 4.93C20.9447 6.80528 21.9979 9.34836 21.9979 12C21.9979 14.6516 20.9447 17.1947 19.07 19.07M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 11.995C17.0039 13.3208 16.4774 14.5924 15.54 15.53"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="image-badge">
@@ -331,6 +332,75 @@
                             Always Available
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Our Facility</span>
+                <h2 class="section-title">Explore Our Station</h2>
+                <p class="section-description">
+                    Take a visual tour of our modern petrol pump and premium facilities
+                </p>
+            </div>
+            <div class="slideshow-container">
+                <div class="slide active">
+                    <img src="images/slideshow_1.png" alt="SBS Energy Facility View 1">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_2.png" alt="SBS Energy Facility View 2">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_3.png" alt="SBS Energy Facility View 3">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_4.png" alt="SBS Energy Facility View 4">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_5.png" alt="SBS Energy Facility View 5">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_6.jpeg" alt="SBS Energy Facility View 6">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_7.jpeg" alt="SBS Energy Facility View 7">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_10.jpeg" alt="SBS Energy Facility View 10">
+                </div>
+                <div class="slide">
+                    <img src="images/slideshow_11.jpeg" alt="SBS Energy Facility View 11">
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="slide-nav prev" aria-label="Previous slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="slide-nav next" aria-label="Next slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+
+                <!-- Slide Indicators -->
+                <div class="slide-indicators">
+                    <button class="indicator active" aria-label="Go to slide 1"></button>
+                    <button class="indicator" aria-label="Go to slide 2"></button>
+                    <button class="indicator" aria-label="Go to slide 3"></button>
+                    <button class="indicator" aria-label="Go to slide 4"></button>
+                    <button class="indicator" aria-label="Go to slide 5"></button>
+                    <button class="indicator" aria-label="Go to slide 6"></button>
+                    <button class="indicator" aria-label="Go to slide 7"></button>
+                    <button class="indicator" aria-label="Go to slide 8"></button>
+                    <button class="indicator" aria-label="Go to slide 9"></button>
                 </div>
             </div>
         </div>
@@ -506,7 +576,7 @@
                                 Available for inquiries</p>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/C8xPgXMH8FiX24Eb6" target="_blank"
+                    <a href="https://maps.app.goo.gl/C8xPgXMH8FiX24Eb6" target="_blank" rel="noopener noreferrer"
                         class="btn btn-primary btn-large">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path
@@ -619,7 +689,7 @@
                 <div class="footer-brand">
                     <div class="logo">
                         <div class="logo-icon">
-                            <img src="bpcl_logo.png" alt="BPCL Logo"
+                            <img src="images/sbs_logo.jpg" alt="SBS Energy Logo"
                                 style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
                         <div class="logo-text">

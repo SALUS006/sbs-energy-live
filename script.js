@@ -73,7 +73,80 @@ function updateActiveNavLink() {
 }
 
 // ===================================
-// HERO SLIDESHOW FUNCTIONALITY
+// HERO VIDEO FUNCTIONALITY
+// ===================================
+
+const heroVideo = document.querySelector('.hero-video');
+const videoPlayPauseBtn = document.querySelector('.video-play-pause');
+const videoSoundToggleBtn = document.querySelector('.video-sound-toggle');
+const playIcon = document.querySelector('.play-icon');
+const pauseIcon = document.querySelector('.pause-icon');
+const soundOffIcon = document.querySelector('.sound-off-icon');
+const soundOnIcon = document.querySelector('.sound-on-icon');
+
+// Video play/pause functionality
+if (videoPlayPauseBtn && heroVideo) {
+    videoPlayPauseBtn.addEventListener('click', () => {
+        if (heroVideo.paused) {
+            heroVideo.play();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        } else {
+            heroVideo.pause();
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        }
+    });
+
+    // Update button state when video plays/pauses
+    heroVideo.addEventListener('play', () => {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+    });
+
+    heroVideo.addEventListener('pause', () => {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+    });
+}
+
+// Video sound toggle functionality
+if (videoSoundToggleBtn && heroVideo) {
+    videoSoundToggleBtn.addEventListener('click', () => {
+        if (heroVideo.muted) {
+            heroVideo.muted = false;
+            soundOffIcon.style.display = 'none';
+            soundOnIcon.style.display = 'block';
+        } else {
+            heroVideo.muted = true;
+            soundOffIcon.style.display = 'block';
+            soundOnIcon.style.display = 'none';
+        }
+    });
+}
+
+// Auto-play video when in viewport (for better UX)
+if (heroVideo) {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                heroVideo.play().catch(err => {
+                    console.log('Auto-play prevented:', err);
+                    // Show play button if autoplay fails
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                });
+            } else {
+                heroVideo.pause();
+            }
+        });
+    }, { threshold: 0.5 });
+
+    videoObserver.observe(heroVideo);
+}
+
+// ===================================
+// SLIDESHOW FUNCTIONALITY (Fallback for other pages)
 // ===================================
 
 const slides = document.querySelectorAll('.slide');
@@ -91,8 +164,12 @@ function showSlide(index) {
     indicators.forEach(indicator => indicator.classList.remove('active'));
 
     // Add active class to current slide and indicator
-    slides[index].classList.add('active');
-    indicators[index].classList.add('active');
+    if (slides[index]) {
+        slides[index].classList.add('active');
+    }
+    if (indicators[index]) {
+        indicators[index].classList.add('active');
+    }
 
     currentSlide = index;
 }
@@ -154,6 +231,7 @@ if (slideshowContainer) {
 if (slides.length > 0) {
     startSlideshow();
 }
+
 
 // ===================================
 // SERVICE CARDS ANIMATION
@@ -281,31 +359,75 @@ contactForm.addEventListener('submit', (e) => {
     // Reset form
     contactForm.reset();
 
-    // Log form data (for demonstration)
-    console.log('Form submitted:', formData);
+    // Note: In production, form data should be sent to a secure backend endpoint
+    // Do not log sensitive user data to console in production
+    // console.log('Form submitted:', formData);
 });
 
 // ===================================
 // NOTIFICATION SYSTEM
 // ===================================
 
+// Sanitize string for use in className to prevent XSS
+function sanitizeClassName(str) {
+    // Only allow alphanumeric characters and hyphens for CSS class names
+    return str.replace(/[^a-zA-Z0-9-]/g, '');
+}
+
 function showNotification(message, type = 'info') {
+    // Sanitize type parameter for use in className
+    const safeType = sanitizeClassName(type);
+    
     // Create notification element
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>${message}</span>
-        </div>
-        <button class="notification-close" aria-label="Close notification">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-    `;
+    notification.className = `notification notification-${safeType}`;
+    
+    // Create notification content using safe DOM methods instead of innerHTML
+    const notificationContent = document.createElement('div');
+    notificationContent.className = 'notification-content';
+    
+    // Create SVG icon
+    const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgIcon.setAttribute('width', '24');
+    svgIcon.setAttribute('height', '24');
+    svgIcon.setAttribute('viewBox', '0 0 24 24');
+    svgIcon.setAttribute('fill', 'none');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M20 6L9 17L4 12');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svgIcon.appendChild(path);
+    
+    // Create message span
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = message; // textContent automatically escapes HTML
+    
+    notificationContent.appendChild(svgIcon);
+    notificationContent.appendChild(messageSpan);
+    
+    // Create close button
+    const closeButton = document.createElement('button');
+    closeButton.className = 'notification-close';
+    closeButton.setAttribute('aria-label', 'Close notification');
+    
+    const closeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    closeSvg.setAttribute('width', '20');
+    closeSvg.setAttribute('height', '20');
+    closeSvg.setAttribute('viewBox', '0 0 24 24');
+    closeSvg.setAttribute('fill', 'none');
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M18 6L6 18M6 6L18 18');
+    path1.setAttribute('stroke', 'currentColor');
+    path1.setAttribute('stroke-width', '2');
+    path1.setAttribute('stroke-linecap', 'round');
+    path1.setAttribute('stroke-linejoin', 'round');
+    closeSvg.appendChild(path1);
+    closeButton.appendChild(closeSvg);
+    
+    notification.appendChild(notificationContent);
+    notification.appendChild(closeButton);
 
     // Add styles for notification
     const style = document.createElement('style');
